@@ -2,24 +2,24 @@
   "connection": "default",
   "collectionName": "",
   "info": {
-    "name": "post",
+    "name": "people",
     "description": ""
   },
   "options": {
     "timestamps": true
   },
   "attributes": {
-    "text": {
+    "login": {
       "default": "",
-      "type": "text"
+      "type": "string"
     },
-    "people": {
-      "model": "people",
-      "via": "posts"
-    },
-    "time": {
+    "password": {
       "default": "",
-      "type": "date"
+      "type": "password"
+    },
+    "posts": {
+      "collection": "post",
+      "via": "people"
     }
   }
 }

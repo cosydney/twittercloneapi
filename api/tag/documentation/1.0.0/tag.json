@@ -499,34 +499,6 @@
           "name": {
             "type": "string",
             "default": ""
-          },
-          "posts": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "content": {
-                  "type": "string"
-                },
-                "cover": {
-                  "type": "string"
-                },
-                "tags": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
           }
         }
       },
@@ -535,12 +507,6 @@
           "name": {
             "type": "string",
             "default": ""
-          },
-          "posts": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           }
         }
       }

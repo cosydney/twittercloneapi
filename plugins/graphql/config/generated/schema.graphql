@@ -1,3 +1,11 @@
+input createPeopleInput {
+  data: PeopleInput
+}
+
+type createPeoplePayload {
+  person: People
+}
+
 input createPostInput {
   data: PostInput
 }
@@ -34,6 +42,14 @@ type createUserPayload {
 The `DateTime` scalar represents a date and time following the ISO 8601 standard
 """
 scalar DateTime
+
+input deletePeopleInput {
+  where: InputID
+}
+
+type deletePeoplePayload {
+  person: People
+}
 
 input deletePostInput {
   where: InputID
@@ -89,9 +105,12 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 """
 scalar JSON
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | Post | createPostPayload | updatePostPayload | deletePostPayload | PostConnection | PostAggregator | PostGroupBy | PostConnection_id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionTitle | PostConnectionContent | PostConnectionCover | Tag | createTagPayload | updateTagPayload | deleteTagPayload | TagConnection | TagAggregator | TagGroupBy | TagConnection_id | TagConnectionCreatedAt | TagConnectionUpdatedAt | TagConnectionName | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UploadFileConnectionPublic_id | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | People | createPeoplePayload | updatePeoplePayload | deletePeoplePayload | PeopleConnection | PeopleAggregator | PeopleGroupBy | PeopleConnection_id | PeopleConnectionCreatedAt | PeopleConnectionUpdatedAt | PeopleConnectionLogin | PeopleConnectionPassword | Post | createPostPayload | updatePostPayload | deletePostPayload | PostConnection | PostAggregator | PostGroupBy | PostConnection_id | PostConnectionCreatedAt | PostConnectionUpdatedAt | PostConnectionText | PostConnectionPeople | PostConnectionTime | Tag | createTagPayload | updateTagPayload | deleteTagPayload | TagConnection | TagAggregator | TagGroupBy | TagConnection_id | TagConnectionCreatedAt | TagConnectionUpdatedAt | TagConnectionName | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UploadFileConnectionPublic_id | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
 
 type Mutation {
+  createPeople(input: createPeopleInput): createPeoplePayload
+  updatePeople(input: updatePeopleInput): updatePeoplePayload
+  deletePeople(input: deletePeopleInput): deletePeoplePayload
   createPost(input: createPostInput): createPostPayload
   updatePost(input: updatePostInput): updatePostPayload
   deletePost(input: deletePostInput): deletePostPayload
@@ -113,14 +132,71 @@ type Mutation {
   upload(refId: ID, ref: String, source: String, file: Upload!): UploadFile!
 }
 
+type People {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  login: String
+  password: String
+  posts(sort: String, limit: Int, start: Int, where: JSON): [Post]
+}
+
+type PeopleAggregator {
+  count: Int
+}
+
+type PeopleConnection {
+  values: [People]
+  groupBy: PeopleGroupBy
+  aggregate: PeopleAggregator
+}
+
+type PeopleConnection_id {
+  key: ID
+  connection: PeopleConnection
+}
+
+type PeopleConnectionCreatedAt {
+  key: DateTime
+  connection: PeopleConnection
+}
+
+type PeopleConnectionLogin {
+  key: String
+  connection: PeopleConnection
+}
+
+type PeopleConnectionPassword {
+  key: String
+  connection: PeopleConnection
+}
+
+type PeopleConnectionUpdatedAt {
+  key: DateTime
+  connection: PeopleConnection
+}
+
+type PeopleGroupBy {
+  _id: [PeopleConnection_id]
+  createdAt: [PeopleConnectionCreatedAt]
+  updatedAt: [PeopleConnectionUpdatedAt]
+  login: [PeopleConnectionLogin]
+  password: [PeopleConnectionPassword]
+}
+
+input PeopleInput {
+  login: String
+  password: String
+  posts: [ID]
+}
+
 type Post {
   _id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  title: String
-  content: String
-  cover: UploadFile
-  tags(sort: String, limit: Int, start: Int, where: JSON): [Tag]
+  text: String
+  people: People
+  time: DateTime
 }
 
 type PostAggregator {
@@ -138,23 +214,23 @@ type PostConnection_id {
   connection: PostConnection
 }
 
-type PostConnectionContent {
-  key: String
-  connection: PostConnection
-}
-
-type PostConnectionCover {
-  key: ID
-  connection: PostConnection
-}
-
 type PostConnectionCreatedAt {
   key: DateTime
   connection: PostConnection
 }
 
-type PostConnectionTitle {
+type PostConnectionPeople {
+  key: ID
+  connection: PostConnection
+}
+
+type PostConnectionText {
   key: String
+  connection: PostConnection
+}
+
+type PostConnectionTime {
+  key: DateTime
   connection: PostConnection
 }
 
@@ -167,19 +243,21 @@ type PostGroupBy {
   _id: [PostConnection_id]
   createdAt: [PostConnectionCreatedAt]
   updatedAt: [PostConnectionUpdatedAt]
-  title: [PostConnectionTitle]
-  content: [PostConnectionContent]
-  cover: [PostConnectionCover]
+  text: [PostConnectionText]
+  people: [PostConnectionPeople]
+  time: [PostConnectionTime]
 }
 
 input PostInput {
-  title: String
-  content: String
-  cover: ID
-  tags: [ID]
+  text: String
+  people: ID
+  time: DateTime
 }
 
 type Query {
+  person(id: ID!): People
+  people(sort: String, limit: Int, start: Int, where: JSON): [People]
+  peopleConnection(sort: String, limit: Int, start: Int, where: JSON): PeopleConnection
   post(id: ID!): Post
   posts(sort: String, limit: Int, start: Int, where: JSON): [Post]
   postsConnection(sort: String, limit: Int, start: Int, where: JSON): PostConnection
@@ -214,7 +292,6 @@ type Tag {
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String
-  posts(sort: String, limit: Int, start: Int, where: JSON): [Post]
 }
 
 type TagAggregator {
@@ -256,7 +333,15 @@ type TagGroupBy {
 
 input TagInput {
   name: String
-  posts: [ID]
+}
+
+input updatePeopleInput {
+  where: InputID
+  data: PeopleInput
+}
+
+type updatePeoplePayload {
+  person: People
 }
 
 input updatePostInput {

@@ -12,11 +12,6 @@
     "name": {
       "default": "",
       "type": "string"
-    },
-    "posts": {
-      "collection": "post",
-      "via": "tags",
-      "dominant": true
     }
   }
 }

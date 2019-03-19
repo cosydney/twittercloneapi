@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/tags",
-      "handler": "Tag.find",
+      "path": "/people",
+      "handler": "People.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/tags/count",
-      "handler": "Tag.count",
+      "path": "/people/count",
+      "handler": "People.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/tags/:_id",
-      "handler": "Tag.findOne",
+      "path": "/people/:_id",
+      "handler": "People.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/tags",
-      "handler": "Tag.create",
+      "path": "/people",
+      "handler": "People.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/tags/:_id",
-      "handler": "Tag.update",
+      "path": "/people/:_id",
+      "handler": "People.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/tags/:_id",
-      "handler": "Tag.destroy",
+      "path": "/people/:_id",
+      "handler": "People.destroy",
       "config": {
         "policies": []
       }

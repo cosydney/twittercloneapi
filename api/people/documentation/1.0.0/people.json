@@ -1,18 +1,18 @@
 {
   "paths": {
-    "/posts": {
+    "/people": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Find all the people's records",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve people document(s)",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Post"
+                    "$ref": "#/components/schemas/People"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Post"
+          "People"
         ],
         "parameters": [
           {
@@ -168,14 +168,14 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new record",
+        "description": "Create a new people record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve people document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Post"
+                  "$ref": "#/components/schemas/People"
                 }
               }
             }
@@ -213,7 +213,7 @@
         },
         "summary": "",
         "tags": [
-          "Post"
+          "People"
         ],
         "requestBody": {
           "description": "",
@@ -221,20 +221,20 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPost"
+                "$ref": "#/components/schemas/NewPeople"
               }
             }
           }
         }
       }
     },
-    "/posts/count": {
+    "/people/count": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Retrieve the numver of people documents",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve people document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -280,22 +280,22 @@
         },
         "summary": "",
         "tags": [
-          "Post"
+          "People"
         ],
         "parameters": []
       }
     },
-    "/posts/{_id}": {
+    "/people/{_id}": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Find one people record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve people document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Post"
+                  "$ref": "#/components/schemas/People"
                 }
               }
             }
@@ -333,7 +333,7 @@
         },
         "summary": "",
         "tags": [
-          "Post"
+          "People"
         ],
         "parameters": [
           {
@@ -350,14 +350,14 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a record",
+        "description": "Update a single people record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve people document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Post"
+                  "$ref": "#/components/schemas/People"
                 }
               }
             }
@@ -395,7 +395,7 @@
         },
         "summary": "",
         "tags": [
-          "Post"
+          "People"
         ],
         "requestBody": {
           "description": "",
@@ -403,7 +403,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPost"
+                "$ref": "#/components/schemas/NewPeople"
               }
             }
           }
@@ -423,10 +423,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a record",
+        "description": "Delete a single people record",
         "responses": {
           "200": {
-            "description": "deletes a single record based on the ID supplied",
+            "description": "deletes a single people based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -469,7 +469,7 @@
         },
         "summary": "",
         "tags": [
-          "Post"
+          "People"
         ],
         "parameters": [
           {
@@ -488,7 +488,7 @@
   },
   "components": {
     "schemas": {
-      "Post": {
+      "People": {
         "required": [
           "id"
         ],
@@ -496,50 +496,53 @@
           "id": {
             "type": "string"
           },
-          "text": {
+          "login": {
             "type": "string",
             "default": ""
           },
-          "people": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "login": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              },
-              "posts": {
-                "type": "array",
-                "items": {
+          "password": {
+            "type": "string",
+            "default": ""
+          },
+          "posts": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "people": {
+                  "type": "string"
+                },
+                "time": {
                   "type": "string"
                 }
               }
             }
-          },
-          "time": {
-            "type": "string",
-            "default": ""
           }
         }
       },
-      "NewPost": {
+      "NewPeople": {
         "properties": {
-          "text": {
+          "login": {
             "type": "string",
             "default": ""
           },
-          "people": {
-            "type": "string"
-          },
-          "time": {
+          "password": {
             "type": "string",
             "default": ""
+          },
+          "posts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }
@@ -547,7 +550,7 @@
   },
   "tags": [
     {
-      "name": "Post"
+      "name": "People"
     }
   ]
 }
